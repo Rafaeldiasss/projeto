@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Belle Époque — Quiz</title>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+  <script defer src="static/js/script.js"></script>
+
+</head>
+<body class="page">
+  
+
+<header class="site-header">
+  <div style="display:grid; grid-template-columns:1fr auto 1fr; align-items:center; width:100%; position:relative;">
+    <div></div>
+    <div class="brand" style="justify-self:center;">
+      <h1>Jornal da Belle Époque</h1>
+      <p class="subtitle">1871 — 1914</p>
+    </div>
+    <button id="theme-toggle" class="btn" style="justify-self:end; margin-left:auto;">🌙</button>
+  </div>
+  <nav class="navbar" style="display:flex; justify-content:center; gap:18px; margin-top:8px;">
+    <a class="navlink fade-in" href="index.html">Introdução</a>
+    <a class="navlink fade-in" href="inicio.html">Início</a>
+    <a class="navlink fade-in" href="cultura.html">Cultura</a>
+    <a class="navlink fade-in" href="avancos.html">Avanços</a>
+    <a class="navlink fade-in" href="fim.html">Fim</a>
+    <a class="navlink quiz fade-in" href="quiz.html">Quiz</a>
+  </nav>
+</header>
+
+  <main class="container fade-in quiz">
+    <h2>Quiz — Estilo ENEM (30 questões)</h2>
+    <p class="muted">Responda e acompanhe sua pontuação. Cada acerto vale 1 ponto.</p>
+    <div id="quiz-app" class="quiz-app"></div>
+    <div class="scoreboard">
+      <span>Pergunta: <strong id="qnum">1/30</strong></span>
+      <span>Pontos: <strong id="score">0</strong></span>
+    </div>
+  </main>
+  
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2025 — Projeto Educacional Belle Époque | Estética de jornal antigo @ Desenvolvido por Renato Nunes e Rafael Dias.</p>
+    <p>Conteúdo didático baseado em referências gerais de livros e aulas públicas (estilo ENEM). Substitua imagens por acervos livres para uso.</p>
+  </div>
+</footer>
+
+  <script>
+    window.QUIZ_QUESTIONS = [
+  {
+    "q": "A expressão 'Belle Époque' refere-se, em geral, ao período entre:",
+    "opts": [
+      "1815–1848",
+      "1871–1914",
+      "1918–1939",
+      "1945–1960"
+    ],
+    "ans": 1,
+    "exp": "Corresponde ao período entre o pós-1871 e a eclosão da Primeira Guerra em 1914."
+  },
+  {
+    "q": "Um traço urbano típico associado à Belle Époque foi:",
+    "opts": [
+      "Redução da iluminação pública",
+      "Expansão de bulevares e cafés",
+      "Ruralização da economia",
+      "Declínio do transporte coletivo"
+    ],
+    "ans": 1,
+    "exp": "As reformas urbanas ampliam bulevares, iluminação e sociabilidade em cafés."
+  },
+  {
+    "q": "Na cultura visual da Belle Époque, um estilo marcante foi o:",
+    "opts": [
+      "Barroco",
+      "Art Nouveau",
+      "Românico",
+      "Expressionismo Abstrato"
+    ],
+    "ans": 1,
+    "exp": "O Art Nouveau é caracterizado por linhas orgânicas e motivos naturais."
+  },
+  {
+    "q": "No campo das comunicações, destacam-se inovações como:",
+    "opts": [
+      "Telégrafo e telefone",
+      "Pombos-correio",
+      "Somente rádio",
+      "Apenas jornais manuscritos"
+    ],
+    "ans": 0,
+    "exp": "Telégrafo e telefone integram mercados e governos com mais rapidez."
+  },
+  {
+    "q": "Os bondes elétricos e a iluminação pública alteraram sobretudo:",
+    "opts": [
+      "A vida noturna e o deslocamento urbano",
+      "A estrutura agrária",
+      "As trocas marítimas",
+      "A educação rural"
+    ],
+    "ans": 0,
+    "exp": "Tecnologias elétricas transformam mobilidade e hábitos noturnos."
+  },
+  {
+    "q": "A crescente imprensa ilustrada e os cartazes publicitários indicam:",
+    "opts": [
+      "Retrocesso tecnológico",
+      "Cultura de massas emergente",
+      "Fim da leitura",
+      "Censura absoluta"
+    ],
+    "ans": 1,
+    "exp": "Há expansão do consumo cultural e da publicidade nas metrópoles."
+  },
+  {
+    "q": "Uma consequência social do progresso econômico do período foi:",
+    "opts": [
+      "Extinção das desigualdades",
+      "Aumento uniforme de salários",
+      "Urbanização e consumo ampliados",
+      "Desaparecimento de crises"
+    ],
+    "ans": 2,
+    "exp": "Houve urbanização e consumo, mas desigualdades e crises persistiram."
+  },
+  {
+    "q": "O imperialismo do fim do século XIX relaciona-se a:",
+    "opts": [
+      "Busca por mercados e recursos",
+      "Isolacionismo europeu",
+      "Recuo industrial",
+      "Fim das rivalidades"
+    ],
+    "ans": 0,
+    "exp": "Potências disputam colônias e matérias-primas, elevando tensões."
+  },
+  {
+    "q": "Os cafés e salões funcionavam como:",
+    "opts": [
+      "Apenas espaços religiosos",
+      "Centros de sociabilidade e debate",
+      "Locais de treinamento militar",
+      "Armazéns de grãos"
+    ],
+    "ans": 1,
+    "exp": "Eram espaços de encontro, lazer e circulação de ideias."
+  },
+  {
+    "q": "A medicina no período avançou com:",
+    "opts": [
+      "Teoria dos miasmas",
+      "Microbiologia e higiene",
+      "Exclusão da vacinação",
+      "Abandono de hospitais"
+    ],
+    "ans": 1,
+    "exp": "Estudos em microbiologia e políticas de saúde pública se expandem."
+  },
+  {
+    "q": "A Primeira Guerra eclodiu em 1914 após:",
+    "opts": [
+      "Queda da Bastilha",
+      "Assassinato do arquiduque Francisco Ferdinando",
+      "Tratado de Viena",
+      "Revolução Russa"
+    ],
+    "ans": 1,
+    "exp": "O atentado em Sarajevo aciona alianças e escalada militar."
+  },
+  {
+    "q": "A eletrificação nas cidades impactou principalmente:",
+    "opts": [
+      "Vida rural",
+      "Mineração artesanal",
+      "Iluminação e transporte urbano",
+      "Ciclos agrícolas"
+    ],
+    "ans": 2,
+    "exp": "Ruas iluminadas e bondes elétricos remodelam o cotidiano urbano."
+  },
+  {
+    "q": "O crescimento dos bulevares está associado a:",
+    "opts": [
+      "Feudalismo",
+      "Reformas urbanas e planejamento",
+      "Nomadismo",
+      "Ruralização"
+    ],
+    "ans": 1,
+    "exp": "Projetos urbanos modernizam a circulação e a vida pública."
+  },
+  {
+    "q": "Na cultura de massas, popularizaram-se:",
+    "opts": [
+      "Revistas ilustradas e cartazes",
+      "Manuscritos medievais",
+      "Apenas teatro clássico",
+      "Proibição de imagem"
+    ],
+    "ans": 0,
+    "exp": "A indústria gráfica e a publicidade ganham tração."
+  },
+  {
+    "q": "O termo que descreve a busca por colônias e hegemonia econômica nesse período é:",
+    "opts": [
+      "Mercantilismo medieval",
+      "Feudalismo",
+      "Imperialismo",
+      "Tribalismo"
+    ],
+    "ans": 2,
+    "exp": "Imperialismo marca a disputa por áreas e recursos."
+  },
+  {
+    "q": "Um efeito da integração por telégrafo foi:",
+    "opts": [
+      "Comunicação mais lenta",
+      "Mercados mais conectados",
+      "Isolamento de capitais",
+      "Fim dos jornais"
+    ],
+    "ans": 1,
+    "exp": "Houve aceleração de informações e integração econômica."
+  },
+  {
+    "q": "A Belle Époque coincidiu com:",
+    "opts": [
+      "Revolução Industrial tardia e modernização urbana",
+      "Fechamento de fábricas",
+      "Domínio rural",
+      "Declínio técnico"
+    ],
+    "ans": 0,
+    "exp": "A industrialização avançou com novas tecnologias e metrópoles."
+  },
+  {
+    "q": "Os cartazes do período destacam-se por:",
+    "opts": [
+      "Minimalismo digital",
+      "Art Nouveau e cores marcantes",
+      "Apenas tipografia",
+      "Proibição de ilustrações"
+    ],
+    "ans": 1,
+    "exp": "Cartazismo de artistas como Mucha populariza estética orgânica."
+  },
+  {
+    "q": "O lazer urbano cresceu com:",
+    "opts": [
+      "Feiras, teatros, cafés e cabarés",
+      "Proibição total de eventos",
+      "Êxodo cultural",
+      "Campanhas antiarte"
+    ],
+    "ans": 0,
+    "exp": "A oferta cultural se amplia nas capitais e balneários."
+  },
+  {
+    "q": "A crise que encerra a Belle Époque é:",
+    "opts": [
+      "Primeira Guerra Mundial",
+      "Guerra dos Cem Anos",
+      "Guerra Civil Inglesa",
+      "Guerra Fria"
+    ],
+    "ans": 0,
+    "exp": "A guerra de 1914–1918 rompe o otimismo do período."
+  },
+  {
+    "q": "A expansão do transporte urbano inclui:",
+    "opts": [
+      "Bondes elétricos e metrôs iniciais",
+      "Apenas carroças",
+      "Dirigíveis rurais",
+      "Trens a vapor em fazendas"
+    ],
+    "ans": 0,
+    "exp": "Bondes e primeiras linhas de metrô surgem em grandes cidades."
+  },
+  {
+    "q": "O crescimento das cidades trouxe também:",
+    "opts": [
+      "Saneamento e novos desafios sociais",
+      "Extinção de cortiços",
+      "Fim da pobreza",
+      "Abandono de políticas públicas"
+    ],
+    "ans": 0,
+    "exp": "Saneamento avança, mas persistem pobreza e desigualdades."
+  },
+  {
+    "q": "A cultura científica do período valorizou:",
+    "opts": [
+      "Empirismo e laboratório",
+      "Astrologia estatal",
+      "Magia oficial",
+      "Ocultismo obrigatório"
+    ],
+    "ans": 0,
+    "exp": "Institutos e laboratórios consolidam a pesquisa experimental."
+  },
+  {
+    "q": "A fotografia e o cinema nascente:",
+    "opts": [
+      "Somem do cotidiano",
+      "Amplificam registro e entretenimento",
+      "Ficam secretos",
+      "Substituem a imprensa"
+    ],
+    "ans": 1,
+    "exp": "Novas mídias registram e difundem imagens em massa."
+  },
+  {
+    "q": "Um efeito do imperialismo foi:",
+    "opts": [
+      "Cooperação universal",
+      "Conflitos e rivalidades entre potências",
+      "Isolamento europeu total",
+      "Fim dos exércitos"
+    ],
+    "ans": 1,
+    "exp": "Disputas coloniais e estratégicas ampliam tensões."
+  },
+  {
+    "q": "Sobre a vida noturna, é correto afirmar que:",
+    "opts": [
+      "Declinou com eletricidade",
+      "Expandiu-se com iluminação pública",
+      "Foi proibida",
+      "Migrou ao campo"
+    ],
+    "ans": 1,
+    "exp": "A luz elétrica prolonga atividades em espaços urbanos."
+  },
+  {
+    "q": "Os cartazes publicitários do período serviam para:",
+    "opts": [
+      "Apenas anúncios estatais",
+      "Divulgar produtos, espetáculos e estética moderna",
+      "Comunicar guerras",
+      "Proibir consumo"
+    ],
+    "ans": 1,
+    "exp": "Integram publicidade, arte e cultura de massas."
+  },
+  {
+    "q": "A relação entre ciência e saúde pública resultou em:",
+    "opts": [
+      "Pioras sanitárias",
+      "Campanhas de higiene e vacinação",
+      "Fim dos hospitais",
+      "Proibição de pesquisa"
+    ],
+    "ans": 1,
+    "exp": "Ciência aplicada impulsiona políticas de saúde nas cidades."
+  },
+  {
+    "q": "O termo que define a competição por colônias é:",
+    "opts": [
+      "Liberalismo clássico",
+      "Imperialismo",
+      "Patrimonialismo",
+      "Anarquismo"
+    ],
+    "ans": 1,
+    "exp": "Reforça-se a resposta: imperialismo das potências europeias."
+  },
+  {
+    "q": "A eclosão da guerra em 1914 indica que o otimismo da Belle Époque era:",
+    "opts": [
+      "Ilusório em parte, diante de tensões estruturais",
+      "Irreversível",
+      "Apolítico",
+      "Imune a crises"
+    ],
+    "ans": 0,
+    "exp": "Convívio de progresso com rivalidades conduziu ao conflito."
+  }
+];
+  </script>
+</body>
+</html>
