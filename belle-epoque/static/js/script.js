@@ -13,11 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if(menuToggle && navbar){
     menuToggle.addEventListener('click', () => {
       navbar.classList.toggle('open');
+      // Esconde os três traços quando o menu está aberto
+      menuToggle.style.display = navbar.classList.contains('open') ? 'none' : '';
     });
     // Fecha menu ao clicar em link
     navbar.querySelectorAll('.navlink').forEach(link => {
       link.addEventListener('click', () => {
         navbar.classList.remove('open');
+        // Mostra os três traços ao fechar o menu
+        menuToggle.style.display = '';
       });
     });
   }
