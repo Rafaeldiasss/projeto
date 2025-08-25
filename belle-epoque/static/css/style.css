@@ -1,3 +1,10 @@
+body.quiz-page .site-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
 body.dark-theme {
   --paper: #232323;
   --ink: #f7eed1;
@@ -128,7 +135,7 @@ body.dark-theme .navbar .navlink:hover {
   padding-bottom:88px;
 }
 
-.site-footer{ position:fixed; left:0; bottom:0; width:100%; border-top:3px solid var(--sep); background:var(--gold); z-index:10; }
+.site-footer{ width:100%; border-top:3px solid var(--sep); background:var(--gold); z-index:10; position:static; }
 .site-footer .footer-inner{max-width:1100px; margin:auto; padding:12px 16px; font-size:.9rem; color:var(--muted); text-align:center;}
 
 /* Hero (introdução) responsivo e com contraste nos dois temas */

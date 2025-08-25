@@ -138,6 +138,7 @@ function initQuiz(QUESTIONS){
     app.appendChild(qEl);
 
     const options = document.createElement('div');
+    let selected = false;
     q.opts.forEach((text, i)=>{
       const btn = document.createElement('button');
       btn.className = 'option';
@@ -147,49 +148,55 @@ function initQuiz(QUESTIONS){
     });
     app.appendChild(options);
 
+    const aviso = document.createElement('div');
+    aviso.className = 'quiz-aviso';
+    aviso.style.color = 'crimson';
+    aviso.style.fontWeight = 'bold';
+    aviso.style.marginTop = '8px';
+    aviso.style.display = 'none';
+    aviso.textContent = 'Selecione uma alternativa para continuar.';
+    app.appendChild(aviso);
+
     const controls = document.createElement('div');
     controls.className = 'controls';
     const nextBtn = document.createElement('button');
     nextBtn.className = 'btn';
     nextBtn.textContent = 'Próxima';
     nextBtn.disabled = true;
-    nextBtn.addEventListener('click', next);
+    nextBtn.addEventListener('click', function(){
+      if(nextBtn.disabled){
+        aviso.style.display = 'block';
+        aviso.textContent = 'Selecione uma alternativa para passar para a próxima pergunta.';
+        alert('Selecione uma alternativa para passar para a próxima pergunta.');
+        return;
+      }
+      aviso.style.display = 'none';
+      qIndex++;
+      if(qIndex < total){
+        render();
+      }else{
+        app.innerHTML = `<h3>Quiz finalizado!</h3><p>Sua pontuação: <strong>${score}/${total}</strong></p>`;
+        qNum.textContent = `${total}/${total}`;
+        scoreEl.textContent = score;
+      }
+    });
     controls.appendChild(nextBtn);
     app.appendChild(controls);
 
     function select(i){
+      selected = true;
+      aviso.style.display = 'none';
       const correct = q.ans;
-      options.querySelectorAll('.option').forEach((b, j)=>{
+      options.querySelectorAll('button').forEach((b, idx)=>{
         b.disabled = true;
-        if (j === correct) b.classList.add('correct');
-        if (j === i && j !== correct) b.classList.add('wrong');
+        if(idx === correct) b.classList.add('correct');
+        if(idx === i && idx !== correct) b.classList.add('wrong');
       });
-      const exp = document.createElement('p');
-      exp.className = 'muted';
-      exp.style.marginTop = '8px';
-      exp.textContent = `Explicação: ${q.exp}`;
-      app.appendChild(exp);
-
-      if (i === correct){
-        score++;
-        scoreEl.textContent = score;
-      }
+      if(i === correct) score++;
       nextBtn.disabled = false;
+      qNum.textContent = `${qIndex+1}/${total}`;
+      scoreEl.textContent = score;
     }
-
-    qNum.textContent = `${qIndex+1}/${total}`;
-  }
-
-  function next(){
-    qIndex++;
-    if (qIndex >= total){
-      app.innerHTML = `<h3>Fim do Quiz!</h3>
-        <p>Você fez <strong>${score}</strong> ponto(s) de ${total}.</p>
-        <button class="btn" onclick="window.location.href='index.html'">Voltar ao início</button>`;
-      document.getElementById('qnum').textContent = `${total}/${total}`;
-      return;
-    }
-    render();
   }
 
   render();
