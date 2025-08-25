@@ -1,3 +1,73 @@
+
+.site-footer .footer-inner a {
+  color: #1565c0 !important;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color .2s;
+}
+.site-footer .footer-inner a:hover {
+  color: #0d47a1 !important;
+}
+.site-footer .footer-inner a {
+  color: #1565c0 !important;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color .2s;
+}
+
+.site-footer .footer-inner a:hover {
+  color: #0d47a1 !important;
+}
+/* Menu sanduíche para mobile */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2.1rem;
+  cursor: pointer;
+  margin-left: 12px;
+  color: var(--ink);
+  z-index: 20;
+}
+
+@media (max-width: 720px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    background: var(--gold);
+    border-bottom: 2px solid var(--sep);
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    padding: 0;
+    transition: max-height .3s;
+    max-height: 0;
+    overflow: hidden;
+  }
+  .navbar.open {
+    max-height: 400px;
+    padding: 12px 0;
+  }
+  .navbar .navlink {
+    display: block;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--sep);
+    font-size: 1.08rem;
+    text-align: left;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .site-header {
+    position: relative;
+    z-index: 21;
+  }
+}
 body.quiz-page .site-footer {
   position: fixed;
   left: 0;
@@ -40,10 +110,15 @@ body.dark-theme .btn {
 }
 .card:hover {
   transform:translateY(-18px) scale(1.03);
-  box-shadow:0 0 32px 8px #ffe9b3, 0 16px 28px rgba(0,0,0,.13);
+  box-shadow:0 0 32px 8px #c9a86a, 0 16px 28px rgba(0,0,0,.13);
   z-index:2;
+  box-shadow:0 0 32px 8px #ffe9b3, 0 16px 28px rgba(0,0,0,.13);
 }
 .card-glow {
+  box-shadow:0 0 32px 12px #c9a86a, 0 16px 28px rgba(0,0,0,.13) !important;
+  border-color:#e6a327;
+}
+body.dark-theme .card-glow {
   box-shadow:0 0 32px 12px #ffe9b3, 0 16px 28px rgba(0,0,0,.13) !important;
   border-color:gold;
 }
@@ -137,6 +212,15 @@ body.dark-theme .navbar .navlink:hover {
 
 .site-footer{ width:100%; border-top:3px solid var(--sep); background:var(--gold); z-index:10; position:static; }
 .site-footer .footer-inner{max-width:1100px; margin:auto; padding:12px 16px; font-size:.9rem; color:var(--muted); text-align:center;}
+.site-footer .footer-inner a {
+  color: #1565c0 !important;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color .2s;
+}
+.site-footer .footer-inner a:hover {
+  color: #0d47a1 !important;
+}
 
 /* Hero (introdução) responsivo e com contraste nos dois temas */
 .hero {

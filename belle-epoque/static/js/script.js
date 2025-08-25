@@ -1,5 +1,26 @@
 // Page flip transition on navigation
 document.addEventListener('DOMContentLoaded', () => {
+  // Menu sanduíche mobile
+  const menuToggle = document.createElement('button');
+  menuToggle.className = 'menu-toggle';
+  menuToggle.setAttribute('aria-label', 'Abrir menu');
+  menuToggle.innerHTML = '&#9776;'; // três traços
+  const header = document.querySelector('.site-header > div');
+  if(header){
+    header.appendChild(menuToggle);
+  }
+  const navbar = document.querySelector('.navbar');
+  if(menuToggle && navbar){
+    menuToggle.addEventListener('click', () => {
+      navbar.classList.toggle('open');
+    });
+    // Fecha menu ao clicar em link
+    navbar.querySelectorAll('.navlink').forEach(link => {
+      link.addEventListener('click', () => {
+        navbar.classList.remove('open');
+      });
+    });
+  }
   // Aplica tema salvo no localStorage ao carregar
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') {
@@ -192,7 +213,18 @@ function initQuiz(QUESTIONS){
         if(idx === correct) b.classList.add('correct');
         if(idx === i && idx !== correct) b.classList.add('wrong');
       });
-      if(i === correct) score++;
+      if(i === correct) {
+        score++;
+      } else {
+        // Mostra explicação da resposta errada
+        const exp = document.createElement('div');
+        exp.className = 'quiz-explicacao';
+        exp.style.marginTop = '12px';
+        exp.style.color = 'crimson';
+        exp.style.fontWeight = 'bold';
+        exp.textContent = 'Explicação: ' + (q.exp || '');
+        app.appendChild(exp);
+      }
       nextBtn.disabled = false;
       qNum.textContent = `${qIndex+1}/${total}`;
       scoreEl.textContent = score;
