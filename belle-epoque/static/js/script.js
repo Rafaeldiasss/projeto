@@ -149,9 +149,27 @@ function initQuiz(QUESTIONS){
   const app = document.getElementById('quiz-app');
   const qNum = document.getElementById('qnum');
   const scoreEl = document.getElementById('score');
+  let erros = [];
+
+  function shuffleOptions(q) {
+    // Cria array de pares [texto, índice original]
+    const arr = q.opts.map((text, idx) => [text, idx]);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    // Encontra novo índice da resposta correta
+    const newCorrect = arr.findIndex(pair => pair[1] === q.ans);
+    return {
+      opts: arr.map(pair => pair[0]),
+      ans: newCorrect
+    };
+  }
 
   function render(){
     const q = QUESTIONS[qIndex];
+    // Embaralha as opções e atualiza índice da correta
+    const shuffled = shuffleOptions(q);
     app.innerHTML = '';
     const qEl = document.createElement('div');
     qEl.className = 'question';
@@ -160,11 +178,11 @@ function initQuiz(QUESTIONS){
 
     const options = document.createElement('div');
     let selected = false;
-    q.opts.forEach((text, i)=>{
+    shuffled.opts.forEach((text, i)=>{
       const btn = document.createElement('button');
       btn.className = 'option';
       btn.textContent = text;
-      btn.addEventListener('click', ()=> select(i));
+      btn.addEventListener('click', ()=> select(i, shuffled.ans, shuffled.opts));
       options.appendChild(btn);
     });
     app.appendChild(options);
@@ -199,15 +217,29 @@ function initQuiz(QUESTIONS){
         app.innerHTML = `<h3>Quiz finalizado!</h3><p>Sua pontuação: <strong>${score}/${total}</strong></p>`;
         qNum.textContent = `${total}/${total}`;
         scoreEl.textContent = score;
+        // Exibe resumo dos erros
+        if(erros.length > 0){
+          const resumo = document.createElement('div');
+          resumo.className = 'quiz-resumo-erros';
+          resumo.innerHTML = `<h4>Resumo dos erros:</h4>`;
+          erros.forEach(e => {
+            resumo.innerHTML += `<div style='margin-bottom:12px; border-bottom:1px solid #ccc; padding-bottom:8px;'>
+              <strong>Pergunta ${e.numero}:</strong> ${e.pergunta}<br>
+              <span style='color:crimson;'>Sua resposta: ${e.respostaErrada}</span><br>
+              <span style='color:green;'>Resposta correta: ${e.respostaCerta}</span><br>
+              <span style='font-style:italic;'>Explicação: ${e.explicacao}</span>
+            </div>`;
+          });
+          app.appendChild(resumo);
+        }
       }
     });
     controls.appendChild(nextBtn);
     app.appendChild(controls);
 
-    function select(i){
+    function select(i, correct, optsArr){
       selected = true;
       aviso.style.display = 'none';
-      const correct = q.ans;
       options.querySelectorAll('button').forEach((b, idx)=>{
         b.disabled = true;
         if(idx === correct) b.classList.add('correct');
@@ -224,6 +256,14 @@ function initQuiz(QUESTIONS){
         exp.style.fontWeight = 'bold';
         exp.textContent = 'Explicação: ' + (q.exp || '');
         app.appendChild(exp);
+        // Salva o erro para o resumo final
+        erros.push({
+          numero: qIndex+1,
+          pergunta: q.q,
+          respostaErrada: optsArr[i],
+          respostaCerta: optsArr[correct],
+          explicacao: q.exp || ''
+        });
       }
       nextBtn.disabled = false;
       qNum.textContent = `${qIndex+1}/${total}`;
